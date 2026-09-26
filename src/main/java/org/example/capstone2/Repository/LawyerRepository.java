@@ -11,7 +11,8 @@ public interface LawyerRepository extends JpaRepository<Lawyer,Integer> {
     Lawyer findLawyerById(Integer id);
     Lawyer findLawyerByEmail(String email);
 
-    List<Lawyer> findLawyerByCity(String city);
-    List<Lawyer> findLawyerBySpecialty(String Specialty);
-    List<Lawyer> findLawyerByConsultationPriceBetween(Double min,Double max);
+    List<Lawyer> findLawyerByCityAndStatus(String city,String Status);
+    List<Lawyer> findLawyerBySpecialtyAndStatus(String Specialty,String Status);
+    List<Lawyer> findLawyerByConsultationPriceBetweenAndStatus(Double min,Double max,String status);
+    List<Lawyer> findLawyerByStatus(String status);
 }

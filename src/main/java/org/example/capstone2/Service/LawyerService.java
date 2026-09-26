@@ -53,15 +53,23 @@ public class LawyerService {
     }
 
     public List<Lawyer> getLawyersByCity(String City){
-        return lawyerRepository.findLawyerByCity(City);
+        return lawyerRepository.findLawyerByCityAndStatus(City,"active");
     }
 
     public List<Lawyer> getLawyersBySpecialty(String Specility){
-        return lawyerRepository.findLawyerBySpecialty(Specility);
+        return lawyerRepository.findLawyerBySpecialtyAndStatus(Specility,"active");
     }
 
     public List<Lawyer> getLawyersByPrice(double min,double max){
-        return lawyerRepository.findLawyerByConsultationPriceBetween(min,max);
+        return lawyerRepository.findLawyerByConsultationPriceBetweenAndStatus(min,max,"active");
+    }
+
+    public List<Lawyer> getActiveLawyers(){
+        return lawyerRepository.findLawyerByStatus("active");
+    }
+
+    public List<Lawyer> getPendingLawyers(){
+        return lawyerRepository.findLawyerByStatus("pended");
     }
 
     public int login(String email,String Password){

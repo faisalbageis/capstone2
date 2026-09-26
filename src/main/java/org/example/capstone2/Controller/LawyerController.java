@@ -19,7 +19,7 @@ import java.util.List;
 public class LawyerController {
     private final LawyerService lawyerService;
 
-    @GetMapping("/get")
+    @GetMapping("/get/all")
     public ResponseEntity<?> getLawyers(){
         List<Lawyer> lawyers = lawyerService.getLawyers();
         if(lawyers.isEmpty()){
@@ -98,6 +98,25 @@ public class LawyerController {
 
         return ResponseEntity.status(200).body(lawyers);
     }
+
+    @GetMapping("/get/active")
+    public ResponseEntity<?> getActiveLawyers(){
+        List<Lawyer> lawyers = lawyerService.getActiveLawyers();
+        if(lawyers.isEmpty()){
+            return ResponseEntity.status(400).body(new ApiResponse("there is no active lawyers"));
+        }
+        return ResponseEntity.status(200).body(lawyers);
+    }
+
+    @GetMapping("/get/pending")
+    public ResponseEntity<?> getPendingLawyers(){
+        List<Lawyer> lawyers = lawyerService.getPendingLawyers();
+        if(lawyers.isEmpty()){
+            return ResponseEntity.status(400).body(new ApiResponse("there is no pending lawyers"));
+        }
+        return ResponseEntity.status(200).body(lawyers);
+    }
+
 
     @PostMapping("/login/{email}/{password}")
     public ResponseEntity<?> login(@PathVariable String email,@PathVariable String password){

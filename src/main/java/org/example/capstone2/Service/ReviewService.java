@@ -31,6 +31,7 @@ public class ReviewService {
         if(!oldCase.getStatus().equalsIgnoreCase("closed")){
             return 1;
         }
+
         Review review1 = reviewRepository.findReviewByCaseId(review.getCaseId());
         if(review1 != null){
             return 2;
