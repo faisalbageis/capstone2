@@ -72,6 +72,10 @@ public class LawyerService {
         return lawyerRepository.findLawyerByStatus("pended");
     }
 
+    public List<Lawyer> lawyerFilter(String specialty,String city,double max){
+        return lawyerRepository.lawyerFilter(specialty, city, max);
+    }
+
     public int login(String email,String Password){
         Lawyer lawyer = lawyerRepository.findLawyerByEmail(email);
 

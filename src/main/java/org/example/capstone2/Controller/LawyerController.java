@@ -116,6 +116,16 @@ public class LawyerController {
         }
         return ResponseEntity.status(200).body(lawyers);
     }
+    @GetMapping("/filter/{specialty}/{city}/{max}")
+    public ResponseEntity<?> getLawyerFilter(@PathVariable String specialty ,@PathVariable String city ,@PathVariable double max){
+        List<Lawyer> lawyers = lawyerService.lawyerFilter(specialty, city, max);
+
+        if(lawyers.isEmpty()){
+            return ResponseEntity.status(400).body(new ApiResponse("there is no lawyers found"));
+        }
+
+        return ResponseEntity.status(200).body(lawyers);
+    }
 
 
     @PostMapping("/login/{email}/{password}")

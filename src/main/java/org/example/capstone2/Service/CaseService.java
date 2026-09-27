@@ -21,6 +21,7 @@ public class CaseService {
     private final RequestRepository requestRepository;
     private final LawyerRepository lawyerRepository;
     private final UserRepository userRepository;
+    private  final EmailService emailService;
 
     public List<Case> getCases() {
         return caseRepository.findAll();
@@ -123,8 +124,13 @@ public class CaseService {
         }
 
         if(foundCase.getLawyerId().equals(lawyerId)){
-            foundCase.setStatus("closed");
+            foundCase.setStatus("Closed");
             caseRepository.save(foundCase);
+
+            User user = userRepository.findUserById(foundCase.getUserId());
+            emailService.sendEmail(user.getEmail(),
+                    "Case Closed",
+                    "Your case has been closed by the lawyer.");
 
             return 2;
         }

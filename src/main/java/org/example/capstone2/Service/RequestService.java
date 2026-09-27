@@ -19,6 +19,7 @@ public class RequestService {
     private final LawyerRepository lawyerRepository;
     private final UserRepository userRepository;
     private final CaseService caseService;
+    private final EmailService emailService;
 
     public List<Request> getRequests(){
         return requestRepository.findAll();
@@ -103,6 +104,12 @@ public class RequestService {
                 newcase.setCaseType(request.getCaseType());
                 newcase.setDescription(request.getDescription());
                 caseService.addCase(newcase);
+
+                User user = userRepository.findUserById(request.getUserId());
+                emailService.sendEmail(user.getEmail(),
+                        "Request Accepted",
+                        "Your request has been accepted by the lawyer.");
+
                 return 2;
             }
         return 3;
@@ -124,6 +131,14 @@ public class RequestService {
         if(request.getLawyerId().equals(LawyerId)){
             request.setStatus("Rejected");
             requestRepository.save(request);
+
+
+            User user = userRepository.findUserById(request.getUserId());
+            emailService.sendEmail(user.getEmail(),
+                    "Request Rejected",
+                    "Your request has been rejected by the lawyer.");
+
+
             return 2;
         }
         return 3;
@@ -140,6 +155,10 @@ public class RequestService {
         if(request.getUserId().equals(userID)){
             request.setStatus("Cancelled");
             requestRepository.save(request);
+            User user = userRepository.findUserById(userID);
+            emailService.sendEmail(user.getEmail(),
+                    "Request Cancelled",
+                    "Your consultation request has been cancelled successfully.");
             return 1;
         }
         return 2;

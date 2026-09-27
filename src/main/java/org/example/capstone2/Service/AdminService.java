@@ -15,6 +15,7 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final LawyerRepository lawyerRepository;
+    private final EmailService emailService;
 
     public List<Admin> getAdmins(){
         return adminRepository.findAll();
@@ -70,6 +71,16 @@ public class AdminService {
 
         lawyer.setStatus(status);
         lawyerRepository.save(lawyer);
+
+        if(status.equalsIgnoreCase("Active")){
+            emailService.sendEmail(lawyer.getEmail(),
+                    "activate account",
+                    "your Account Has Been Activated");
+        }else {
+            emailService.sendEmail(lawyer.getEmail(),
+                    "Blocked account",
+                    "your Account Has Been Blocked");
+        }
 
         return 3;
     }

@@ -2,9 +2,11 @@ package org.example.capstone2.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.capstone2.Model.Case;
+import org.example.capstone2.Model.Lawyer;
 import org.example.capstone2.Model.Raiting;
 import org.example.capstone2.Model.Review;
 import org.example.capstone2.Repository.CaseRepository;
+import org.example.capstone2.Repository.LawyerRepository;
 import org.example.capstone2.Repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final CaseRepository caseRepository;
     private final RaitingService raitingService;
+    private final EmailService emailService;
+    private final LawyerRepository lawyerRepository;
 
     public List<Review> getReviews(){
         return reviewRepository.findAll();
@@ -37,6 +41,11 @@ public class ReviewService {
             return 2;
         }
         reviewRepository.save(review);
+        Lawyer lawyer = lawyerRepository.findLawyerById(oldCase.getLawyerId());
+        emailService.sendEmail(lawyer.getEmail(),
+                "New Review Received",
+                "A user has submitted a new review for your case.");
+
         Raiting raiting = raitingService.getLawyerRaiting(oldCase.getLawyerId());
         if(raiting==null){
             Raiting r=new Raiting();
@@ -62,11 +71,15 @@ public class ReviewService {
             return 1;
         }
 
-        oldReview.setCaseId(review.getCaseId());
         oldReview.setRating(review.getRating());
         oldReview.setComment(review.getComment());
 
         reviewRepository.save(oldReview);
+
+        Lawyer lawyer = lawyerRepository.findLawyerById(oldCase.getLawyerId());
+        emailService.sendEmail(lawyer.getEmail(),
+                "Review Updated",
+                "A user has updated their review for your case.");
         Raiting raiting = raitingService.getLawyerRaiting(oldCase.getLawyerId());
         if(raiting==null){
             Raiting r=new Raiting();

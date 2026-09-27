@@ -72,7 +72,7 @@ public class RequestController {
 
         return ResponseEntity.status(400).body(new ApiResponse("id not found"));
     }
-    @GetMapping("/search/{lawyerId}")
+    @GetMapping("/search/lawyer/{lawyerId}")
     public ResponseEntity<?> getRequestsByLawyerId(@PathVariable Integer lawyerId){
         List<Request> requests = requestService.getLawyerRequests(lawyerId);
 
@@ -84,7 +84,7 @@ public class RequestController {
     }
 
 
-    @GetMapping("/search/{UserId}")
+    @GetMapping("/search/user/{UserId}")
     public ResponseEntity<?> getRequestsByUserID(@PathVariable Integer UserId){
         List<Request> requests = requestService.getUserRequests(UserId);
 
