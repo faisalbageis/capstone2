@@ -38,9 +38,12 @@ public class RequestController {
             return ResponseEntity.status(400).body(new ApiResponse("user id not found"));
         }else if(success ==1){
             return ResponseEntity.status(400).body(new ApiResponse("lawyer id not found"));
-        }
+        } else if (success==2) {
+            return ResponseEntity.status(200).body(new ApiResponse("request added successfully"));
 
-        return ResponseEntity.status(200).body(new ApiResponse("request added successfully"));
+        }
+        return ResponseEntity.status(400).body(new ApiResponse("lawyer is not active"));
+
     }
 
     @PutMapping("/update/{id}")

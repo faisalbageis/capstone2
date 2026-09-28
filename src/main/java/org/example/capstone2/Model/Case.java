@@ -42,7 +42,7 @@ public class Case {
     @Column(nullable = false)
     @NotEmpty(message = "status can not be empty")
     @Pattern(
-            regexp = "Open|In Progress|Closed",
+            regexp = "Open|Closed",
             message = "status must be either Open, In Progress or Closed"
     )
     private String status = "Open";

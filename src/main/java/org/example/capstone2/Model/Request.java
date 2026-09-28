@@ -37,12 +37,11 @@ public class Request {
     private LocalDate createdAt;
 
     @Column(nullable = false)
-    @NotEmpty(message = "status can not be empty")
     @Pattern(
             regexp = "Pending|Accepted|Rejected|Cancelled",
             message = "status must be either Pending, Accepted, Rejected or Cancelled"
     )
-    private String status = "Pending";
+    private String status;
 
     @Column(nullable = false, length = 1000)
     @NotEmpty(message = "description can not be empty")

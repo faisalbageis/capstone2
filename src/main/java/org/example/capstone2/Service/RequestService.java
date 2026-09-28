@@ -36,8 +36,12 @@ public class RequestService {
             return 1;
         }
 
-        requestRepository.save(request);
-        return 2;
+        if(lawyer.getStatus().equalsIgnoreCase("active")) {
+            request.setStatus("Pending");
+            requestRepository.save(request);
+            return 2;
+        }
+        return 3;
     }
 
     public int updateRequest(Integer id,Request request){

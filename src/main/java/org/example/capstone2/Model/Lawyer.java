@@ -3,6 +3,7 @@ package org.example.capstone2.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,9 +38,8 @@ public class Lawyer {
 
 
     @Column(nullable = false)
-    @NotEmpty(message = "status can not be empty")
     @Pattern(regexp = "active|pended|Blocked",message = "status must be ether active or pended or Blocked")
-    private String status="pended";
+    private String status;
 
     @Column(nullable = false,unique = true)
     @NotEmpty(message = "phone number can not be empty")

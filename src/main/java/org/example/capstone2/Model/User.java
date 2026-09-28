@@ -39,7 +39,6 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    @NotEmpty(message = "status can not be empty")
     @Pattern(regexp = "active|Suspended|Blocked",message = "status must be ether active or Suspended or Blocked")
     private String status="active";
 

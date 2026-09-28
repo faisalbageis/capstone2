@@ -19,6 +19,7 @@ public class LawyerService {
     }
 
     public void addLawyer(Lawyer lawyer){
+        lawyer.setStatus("pended");
         lawyerRepository.save(lawyer);
     }
 
